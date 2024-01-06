@@ -1,0 +1,58 @@
+version: '3.3'
+
+services:
+  # Приложение spring-boot
+  app:
+    container_name: template-app
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/testApp?createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: toor
+    networks:
+      - backend
+
+  # База данных
+  db:
+    image: mysql:8.2
+    container_name: template-mysql
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: testApp
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+  # веб-приложение phpmyadmin
+  phpmyadmin:
+    container_name: template-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:
