@@ -13,7 +13,7 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/testApp?createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/testApp?createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: toor
     networks:
@@ -21,28 +21,23 @@ services:
 
   # База данных
   db:
-    image: mysql:8.2
-    container_name: template-mysql
+    image: postgres:14.5-alpine
+    container_name: template-postgres
     volumes:
-      - db_data:/var/lib/mysql
-      - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - db_data:/var/lib/postgresql/data
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: toor
-      MYSQL_DATABASE: testApp
+      - POSTGRES_DB=testApp
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=toor
     ports:
-      - "3306:3306"
+      - "5432:5432"
     networks:
       - backend
 
-  # веб-приложение phpmyadmin
-  phpmyadmin:
-    container_name: template-phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: root
+  # веб-приложение adminer для postgres
+  admin:
+    image: adminer
     ports:
       - "8081:80"
     restart: always
