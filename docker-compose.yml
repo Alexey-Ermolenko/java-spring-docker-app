@@ -13,9 +13,9 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/testApp?createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: toor
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-prod-us-east-2-1.cluster-cfi5vnucvv3w.us-east-2.rds.amazonaws.com:5432/my-test-app-777-main-db-0545bec2f521f4e66?useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_USERNAME: my-test-app-777-main-db-0545bec2f521f4e66
+      SPRING_DATASOURCE_PASSWORD: MKueHDZ2ArmmapQaFewhrJczUp2tSS
     networks:
       - backend
 
