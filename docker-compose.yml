@@ -13,9 +13,9 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://user-prod-us-east-2-1.cluster-cfi5vnucvv3w.us-east-2.rds.amazonaws.com:5432/my-test-app-777-main-db-0545bec2f521f4e66?useLegacyDatetimeCode=false
-      SPRING_DATASOURCE_USERNAME: my-test-app-777-main-db-0545bec2f521f4e66
-      SPRING_DATASOURCE_PASSWORD: MKueHDZ2ArmmapQaFewhrJczUp2tSS
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-cn01jcev3ddc73bvb0o0-a.oregon-postgres.render.com:5432/test_cesv
+      SPRING_DATASOURCE_USERNAME: test
+      SPRING_DATASOURCE_PASSWORD: L4maEvrnYhGFPifP4x2X1igzcAzx48qd
     networks:
       - backend
 
@@ -27,9 +27,9 @@ services:
       - db_data:/var/lib/postgresql/data
     restart: always
     environment:
-      - POSTGRES_DB=testApp
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=test_cesv
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=L4maEvrnYhGFPifP4x2X1igzcAzx48qd
     ports:
       - "5432:5432"
     networks:
